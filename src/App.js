@@ -14,6 +14,7 @@ import Footer from "./Footer/Footer";
 import Profile from "./views/profile/Profile";
 import Login from "./components/Login/Login";
 import Home from "./views/home/home";
+import axios from "axios";
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -21,10 +22,12 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cart, SetCart] = useState([]);
   const [order, setOrder] = useState({});
+  console.log(order);
   const [errorMessage, SetErrorMessage] = useState("");
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
+
     setProducts(data);
   };
 
@@ -75,6 +78,17 @@ function App() {
         checkoutTokenId,
         newOrder
       );
+      // .then((res) => {
+      //   console.log("res", res);
+      //   let order = {
+      //     user: res?.customer,
+      //     products: res?.order.line_items,
+      //     total_with_tax: res?.order.total_with_tax,
+      //     cart_id: res?.cart_id,
+      //     shipping: res?.shipping,
+      //   };
+      //   console.log(order);
+      // });
 
       setOrder(incomingOrder);
       refreshCart();
@@ -87,6 +101,19 @@ function App() {
     fetchProducts();
     fetchCart();
   }, []);
+  useEffect(() => {
+    let newOrder = {};
+    if (order.customer) {
+      newOrder = {
+        user: order?.customer,
+        products: order?.order.line_items,
+        total_with_tax: order?.order.total_with_tax,
+        cart_id: order?.cart_id,
+        shipping: order?.shipping,
+      };
+    }
+    console.log(newOrder);
+  }, [order]);
 
   const search = () => {
     return [];
