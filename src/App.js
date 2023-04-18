@@ -80,11 +80,12 @@ function App() {
         checkoutTokenId,
         newOrder
       );
-
+      console.log(incomingOrder);
       setOrder(incomingOrder);
+
       refreshCart();
     } catch (error) {
-      SetErrorMessage(error.data.error.message);
+      // SetErrorMessage(error.data.error.message);
     }
   };
 
@@ -92,8 +93,21 @@ function App() {
     fetchProducts();
     fetchCart();
   }, []);
+
   //save commande to database
-  useEffect(async () => {
+
+  const saveCommande = async (values) => {
+    const data = await axios.post(
+      "https://disney-backend.vercel.app/api/v1/orders",
+      values
+    );
+
+    const newData = await data;
+    if (newData.status === 201) {
+      message.success("order saved successfully");
+    }
+  };
+  useEffect(() => {
     let newOrder = {};
     if (order.customer) {
       newOrder = {
@@ -103,6 +117,9 @@ function App() {
         cart_id: order?.cart_id,
         shipping: order?.shipping,
       };
+    }
+    if (order.customer) {
+      saveCommande(newOrder);
     }
     console.log(newOrder);
   }, [order]);
