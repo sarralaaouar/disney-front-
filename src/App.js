@@ -110,7 +110,7 @@ function App() {
   ////alan ia
   useEffect(() => {
     alanBtn({
-      key: "7b8c5abd7bd5dad6eff1bb188392a1db2e956eca572e1d8b807a3e2338fdd0dc/stage",
+      key: "78b4bb26bc1215ba750d703b9bef903e2e956eca572e1d8b807a3e2338fdd0dc/stage",
       onCommand: ({ command }) => {
         console.log(command);
         if (command === "mugs") {
