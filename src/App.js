@@ -15,6 +15,7 @@ import Profile from "./views/profile/Profile";
 import Login from "./components/Login/Login";
 import Home from "./views/home/home";
 import axios from "axios";
+import alanBtn from "@alan-ai/alan-sdk-web";
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -22,6 +23,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cart, SetCart] = useState([]);
   const [order, setOrder] = useState({});
+
   console.log(order);
   const [errorMessage, SetErrorMessage] = useState("");
 
@@ -78,17 +80,6 @@ function App() {
         checkoutTokenId,
         newOrder
       );
-      // .then((res) => {
-      //   console.log("res", res);
-      //   let order = {
-      //     user: res?.customer,
-      //     products: res?.order.line_items,
-      //     total_with_tax: res?.order.total_with_tax,
-      //     cart_id: res?.cart_id,
-      //     shipping: res?.shipping,
-      //   };
-      //   console.log(order);
-      // });
 
       setOrder(incomingOrder);
       refreshCart();
@@ -101,7 +92,8 @@ function App() {
     fetchProducts();
     fetchCart();
   }, []);
-  useEffect(() => {
+  //save commande to database
+  useEffect(async () => {
     let newOrder = {};
     if (order.customer) {
       newOrder = {
@@ -115,11 +107,33 @@ function App() {
     console.log(newOrder);
   }, [order]);
 
-  const search = () => {
-    return [];
-  };
-
-  // console.log(cart);
+  ////alan ia
+  useEffect(() => {
+    alanBtn({
+      key: "7b8c5abd7bd5dad6eff1bb188392a1db2e956eca572e1d8b807a3e2338fdd0dc/stage",
+      onCommand: ({ command }) => {
+        console.log(command);
+        if (command === "mugs") {
+          window.location.href = "/mugs";
+        }
+        if (command === "products") {
+          window.location.href = "/products";
+        }
+        if (command === "soin") {
+          window.location.href = "/soin";
+        }
+        if (command === "peluche") {
+          window.location.href = "/peluche";
+        }
+        if (command === "login") {
+          window.location.href = "/login";
+        }
+        if (command === "home") {
+          window.location.href = "/";
+        }
+      },
+    });
+  }, []);
 
   return (
     <>
