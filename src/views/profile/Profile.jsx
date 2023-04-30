@@ -84,7 +84,9 @@ const Profile = () => {
       </div>
 
       <div className="profile_right section">
-        {!orders && <h3>There is no orders</h3>}
+        {orders.length === 0 && <h3>There is no orders</h3>}
+        {!orders === 0 && <h3>There is no orders</h3>}
+
         {orders?.map((el, index) => (
           <div className="cards_c" key={index}>
             <div className="card_c">
