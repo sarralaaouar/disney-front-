@@ -11,6 +11,7 @@ import { Space, Tag } from "antd";
 
 const Profile = () => {
   let userString = localStorage.getItem("disney_user");
+  const token = localStorage.getItem("token");
   let user = JSON.parse(userString);
   const [orders, setOrders] = useState([]);
   console.log(orders);
@@ -18,10 +19,19 @@ const Profile = () => {
   useEffect(() => {
     const getOrders = async () => {
       const orders = await axios.get(
-        "https://disney-backend.vercel.app/api/v1/orders"
+        "https://disney-backend.vercel.app/api/v1/orders",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
       );
+
       const data = await orders;
-      setOrders(data?.data?.data?.data);
+      setOrders(
+        data?.data?.data?.data.filter((el) => el.user.email === user.email)
+      );
     };
     getOrders();
   }, []);
@@ -83,6 +93,10 @@ const Profile = () => {
                   <p>
                     <span className="key_order">Name : </span>
                     {el?.user?.firstname} {el?.user?.lastname}
+                  </p>
+                  <p>
+                    <span className="key_order"> Email : </span>
+                    {el?.user?.email}
                   </p>
                   <p>
                     <span className="key_order">Products : </span>
