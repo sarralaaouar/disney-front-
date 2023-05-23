@@ -45,10 +45,10 @@ const Profile = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: token ? user.email : "",
-      phone: token ? user.phone : "",
-      name: token ? user.name : "",
-      location: token ? user.location : "",
+      email: userString ? user.email : "",
+      phone: userString ? user.phone : "",
+      name: userString ? user.name : "",
+      location: userString ? user.location : "",
     },
     // validationSchema: validationSchema,
 
