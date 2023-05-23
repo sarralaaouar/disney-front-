@@ -7,14 +7,15 @@ import "./Profile.css";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Space, Tag } from "antd";
-
+import { Space, message, Tag } from "antd";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 const Profile = () => {
   let userString = localStorage.getItem("disney_user");
   const token = localStorage.getItem("token");
   let user = JSON.parse(userString);
   const [orders, setOrders] = useState([]);
-  console.log(orders);
+  console.log(user);
 
   useEffect(() => {
     const getOrders = async () => {
@@ -36,6 +37,41 @@ const Profile = () => {
     getOrders();
   }, []);
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: token ? user.email : "",
+      phone: token ? user.phone : "",
+      name: token ? user.name : "",
+      location: token ? user.location : "",
+    },
+    // validationSchema: validationSchema,
+
+    onSubmit: async (values) => {
+      try {
+        const data = await axios.put(
+          `https://disney-backend.vercel.app/api/v1/users/${user?._id}`,
+          { ...values }
+        );
+        let usr = data.data.data.data;
+        if (data.status === 200) {
+          localStorage.setItem("disney_user", JSON.stringify(usr));
+          message.success("profile updated successfully");
+        }
+      } catch (error) {
+        console.log(error);
+        message.error(
+          error.response ? error.response.data.message : "something went wrong"
+        );
+      }
+    },
+  });
+
   return (
     <div className="profile">
       <div className="profile_left section">
@@ -46,41 +82,58 @@ const Profile = () => {
             <p className="email_user">{user?.email}</p>
           </div>
         </div>
-        <label htmlFor="email">Name</label>
-        <Input
-          className="input_user"
-          size="large"
-          placeholder="name"
-          prefix={<UserOutlined />}
-          defaultValue={user?.name}
-        />
-        <label htmlFor="email">Email Address</label>
-        <Input
-          className="input_user"
-          size="large"
-          placeholder="email"
-          prefix={<MdMailOutline />}
-          defaultValue={user?.email}
-        />
-        <label htmlFor="email">Phone Number</label>
-        <Input
-          className="input_user"
-          size="large"
-          placeholder="phone"
-          prefix={<FaPhoneAlt />}
-          defaultValue={user?.phone}
-        />
-        <label htmlFor="email">Location</label>
-        <Input
-          className="input_user"
-          size="large"
-          placeholder="Location"
-          prefix={<MdLocationPin />}
-          defaultValue={user?.location}
-        />
-        <Button style={{ background: "#DB7092", color: "#ffff" }}>
-          Submit
-        </Button>
+        <form action="" onSubmit={formik.handleSubmit}>
+          <label htmlFor="email">Name</label>
+          <Input
+            className="input_user"
+            name="name"
+            size="large"
+            placeholder="name"
+            prefix={<UserOutlined />}
+            defaultValue={user?.name}
+            onChange={formik.handleChange}
+            value={formik.values.name}
+          />
+          <label htmlFor="email">Email Address</label>
+          <Input
+            name="email"
+            className="input_user"
+            size="large"
+            placeholder="email"
+            prefix={<MdMailOutline />}
+            defaultValue={user?.email}
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+          <label htmlFor="email">Phone Number</label>
+          <Input
+            name="phone"
+            className="input_user"
+            size="large"
+            placeholder="phone"
+            prefix={<FaPhoneAlt />}
+            onChange={formik.handleChange}
+            value={formik.values.phone}
+          />
+          <label htmlFor="email">Location</label>
+          <Input
+            name="location"
+            className="input_user"
+            size="large"
+            placeholder="Location"
+            prefix={<MdLocationPin />}
+            defaultValue={user?.location}
+            onChange={formik.handleChange}
+            value={formik.values.location}
+          />
+          <Button
+            type="submit"
+            onClick={formik.handleSubmit}
+            style={{ background: "#DB7092", color: "#ffff" }}
+          >
+            Submit
+          </Button>
+        </form>
       </div>
 
       <div className="profile_right section">
