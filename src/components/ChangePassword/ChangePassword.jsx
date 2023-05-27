@@ -36,7 +36,6 @@ function ChangePassword() {
     validationSchema: validationSchema,
 
     onSubmit: async (values) => {
-      console.log(values);
       try {
         const data = await axiosInstance.patch(
           `https://disney-backend.vercel.app/api/v1/users/updatePassword`,
@@ -44,10 +43,7 @@ function ChangePassword() {
         );
         let newToken = data.data.token;
         let usr = data.data.data.user;
-        console.log(data);
         if (data.status === 200) {
-          console.log("token", token);
-          console.log("user", usr);
           localStorage.setItem("disney_token", JSON.stringify(newToken));
           localStorage.setItem("disney_user", JSON.stringify(usr));
           message.success("password updated successfully");
