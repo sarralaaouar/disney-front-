@@ -4,18 +4,41 @@
   font-family: "Poppins", sans-serif;
   margin-top: 40px;
   display: flex;
+  flex-direction: column;
 }
 .section {
   text-align: left;
   border: 1px solid #dadada;
   border-radius: 8px;
-  padding: 20px;
+  padding: 30px;
   height: 100%;
   width: 100%;
 }
+.title_s {
+  margin-bottom: 30px;
+}
+.s_1 {
+  width: 100%;
+  display: flex;
+  flex: auto;
+  gap: 30px;
+}
+@media screen and (max-width: 968px) {
+  .s_1 {
+    width: 100%;
+    display: flex;
+    flex: auto;
+    gap: 30px;
+    flex-direction: column;
+  }
+}
+
 .profile_left {
-  grid-column-end: span 8;
-  flex: 10;
+  width: 100%;
+}
+.chqnge_pwd {
+  grid-column-end: span 6;
+  width: 100%;
 }
 .profile_right {
   grid-column-end: span 16;

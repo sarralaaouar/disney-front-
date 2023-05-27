@@ -205,7 +205,7 @@ function App() {
                 products={products}
                 onAddToCart={handleAddToCart}
               ></Pslider>
-              <img src={Liv} />
+              <img src={Liv} className="home_img" />
             </Route>
           </Switch>
         </div>

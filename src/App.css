@@ -1,7 +1,6 @@
 .App {
   text-align: center;
-  font-family: "Poppins", sans-serif
-;
+  font-family: "Poppins", sans-serif;
 }
 .MuiAppBar-root {
   z-index: 2 !important;
@@ -9,6 +8,9 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+.home_img {
+  width: 100%;
 }
 * {
   margin: 0;
