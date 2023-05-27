@@ -8,7 +8,7 @@ import Pslider from "./components/Pslider/Pslider";
 import Slider from "./components/Slider/Slider";
 import Register from "./components/Register/Register";
 import Nav from "./components/CategoriesNav/Nav";
-import Liv from "../src/assests/livraison.png";
+import Liv from "../src/assests/Brands.png";
 import Checkout from "./components/CheckoutForm/Checkout/Checkout";
 import Footer from "./Footer/Footer";
 import Profile from "./views/profile/Profile";
