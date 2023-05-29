@@ -148,6 +148,14 @@ function App() {
         if (command === "home") {
           window.location.href = "/";
         }
+
+        if (command === "cart") {
+          window.location.href = "/cart";
+        }
+
+         if (command === "profile") {
+          window.location.href = "/profile";
+        }
       },
     });
   }, []);

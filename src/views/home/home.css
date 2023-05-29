@@ -116,6 +116,7 @@
 
 .text-animation h1 {
   animation: bounce-in 1s ease-in-out;
+  color: black;
 }
 
 /* Hide the text initially */

@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../../assests/Banner.png";
+import img from "../../assests/Shop.png";
 import icon1 from "../../assests/1.svg";
 import icon2 from "../../assests/2.svg";
 import icon3 from "../../assests/3.svg";
